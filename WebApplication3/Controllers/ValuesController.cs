@@ -33,7 +33,9 @@ namespace WebApplication3.Controllers
         {
             var splitpath = value.Split(',');
             var data = InvokeRequestResponseService(splitpath[1]).Result;
-            return data;
+            string outputStr = data.Substring(1);
+            string data3 = outputStr.Trim('\'');
+            return data3;
         }
 
         static async Task<string> InvokeRequestResponseService(string path)
@@ -58,9 +60,9 @@ namespace WebApplication3.Controllers
                     }
                 };
 
-                const string apiKey = "8rvLv0bDu7D0Z2K2ExkAs1CGS3yTt8FvSUMiaRMZRFB1PvORuw0uXrwP5Kz24t3U9aCTZXjAjZ3aUwGIbSPEWA=="; // Replace this with the API key for the web service
+                const string apiKey = "D9lBJh6CPSjeUi4QcdGSoxdRflTomebAmuDPFFtCg2eznl63M/AB63DYcc0rZtRREBRRK2cCnsEolmGHfCJfZQ=="; // Replace this with the API key for the web service
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
-                client.BaseAddress = new Uri("https://ussouthcentral.services.azureml.net/subscriptions/55de3f089bfd4719922fb7abc02a2a95/services/52607654d9674a7492c3654101dc25b4/execute?api-version=2.0&format=swagger");
+                client.BaseAddress = new Uri("https://ussouthcentral.services.azureml.net/subscriptions/55de3f089bfd4719922fb7abc02a2a95/services/90b9ede506e6448980b8f052affe7706/execute?api-version=2.0&format=swagger");
 
                 // WARNING: The 'await' statement below can result in a deadlock
                 // if you are calling this code from the UI thread of an ASP.Net application.
@@ -80,8 +82,8 @@ namespace WebApplication3.Controllers
                     var jo = JObject.Parse(result);
                     var res = jo.ToString();
                     dynamic stuff = JsonConvert.DeserializeObject(res);
-                    var data2 = stuff.Results.output1[0].Graphics;
-                    return data2;
+                    var data2 = stuff.Results.output1[0];
+                    return data2["out"];
                 }
                 else
                 {
