@@ -35,7 +35,8 @@ namespace WebApplication3.Controllers
             var data = InvokeRequestResponseService(splitpath[1]).Result;
             string outputStr = data.Substring(1);
             string data3 = outputStr.Trim('\'');
-            return data3;
+            var res="data:image/jpg;base64,"+data3;
+            return res;
         }
 
         static async Task<string> InvokeRequestResponseService(string path)
